@@ -29,4 +29,16 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
     assert_select 'a', text: 'delete', count: 0
   end
 
+  test "index without non activated users" do
+    log_in_as(@non_admin)
+    get users_path(page: 3)
+    User.paginate(page: 3, per_page: 10).each do |user|
+      if user.activated?
+        assert_select 'a[href=?]', user_path(user), text: user.name
+      else
+        assert_select 'a', {count: 0, text: user.name}
+      end
+    end
+  end
+
 end
