@@ -32,3 +32,11 @@ User.create!(name:  "guilla",
                activated: true,
                activated_at: Time.zone.now)
 end
+
+users = User.order(:created_at).take(6)
+50.times do
+  content = Faker::Movies::LordOfTheRings.quote
+  users.each do |user|
+    user.microposts.create!(content: content)
+  end
+end

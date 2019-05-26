@@ -6,6 +6,8 @@ ruby '2.6.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'
 # see https://stackoverflow.com/a/42023527 for win install
+# gem uninstall bcrypt
+# gem install bcrypt --platform=ruby
 gem 'bcrypt'
 gem 'bootstrap-sass'
 # Use sqlite3 as the database for Active Record
@@ -63,3 +65,5 @@ gem 'rails-controller-testing'
 gem "faker"
 gem "will_paginate"
 gem "bootstrap-will_paginate"
+gem "carrierwave"
+gem "mini_magick"
