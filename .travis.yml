@@ -1,0 +1,10 @@
+os: linux
+language: ruby
+rvm:
+  - 2.6.1
+
+install: bundle install --jobs=3 --retry=3
+
+script:
+  - rails db:migrate RAILS_ENV=test
+  - rails test
