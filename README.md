@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/GuillaumeDSM/Rails-tests.svg?branch=master)](https://travis-ci.org/GuillaumeDSM/Rails-tests)
+
+
 #Base on www.railstutorial.org
 
 
