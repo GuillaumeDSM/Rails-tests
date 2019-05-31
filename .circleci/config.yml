@@ -1,0 +1,44 @@
+version: 2
+jobs:
+  build:
+    # Primary container image where all commands run
+    docker:
+      - image: circleci/ruby:2.6.1
+        environment:
+          RAILS_ENV: test
+
+    steps:
+      - checkout
+      - run:
+          name: Configure Bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler
+
+      # Restore Cached Dependencies
+      - type: cache-restore
+        name: Restore bundle cache
+        key: rails-tests-{{ checksum "Gemfile.lock" }}
+
+      # Bundle install dependencies
+      - run:
+          name: Bundle install
+          command: |
+            bundle install --path vendor/bundle
+
+      # Cache Dependencies
+      - type: cache-save
+        name: Store bundle cache
+        key: rails-tests-{{ checksum "Gemfile.lock" }}
+        paths:
+          - vendor/bundle
+
+      - run:
+          name: Database Setup
+          command: |
+            bundle exec rake db:migrate
+
+      - run:
+          name: Parallel RSpec
+          command: bundle exec rake test
